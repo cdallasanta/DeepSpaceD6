@@ -59,20 +59,4 @@ public class Dice : MonoBehaviour
         Transform newParent = GameObject.Find(newArea).transform;
         gameObject.transform.SetParent(newParent, false);
     }
-
-    /* these methods are for the threat cards
-    public void TestMoveUp()
-    {
-        Transform newParent = GameObject.Find("4 Health").transform;
-        gameObject.transform.SetParent(newParent, false);
-        parent = gameObject.transform.parent.gameObject;
-    }
-
-    public void TestMoveDown()
-    {
-        Transform newParent = GameObject.Find("3 Health").transform;
-        gameObject.transform.SetParent(newParent, false);
-        parent = gameObject.transform.parent.gameObject;
-    }
-    */
 }

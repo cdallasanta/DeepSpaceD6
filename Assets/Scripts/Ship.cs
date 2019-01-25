@@ -7,13 +7,16 @@ public class Ship : MonoBehaviour
     public int hull = 8;
     public int shields = 4;
     public int scannersMax = 3;
-    private bool shieldsDisabled;
-    private bool commanderDisabled;
+    public bool shieldsDisabled;
+    public bool commanderDisabled;
     private GameObject scanners;
     public Game game;
-    private bool weaponsUsed;
-    private bool engineeringUsed;
     public Dice selectedDice;
+
+    //move these to the stations
+    public bool weaponsUsed;
+    public bool engineeringUsed;
+
 
     // Start is called before the first frame update
     void Start()
@@ -70,74 +73,6 @@ public class Ship : MonoBehaviour
     public void ToggleCommander()
     {
         commanderDisabled = !commanderDisabled;
-    }
-
-    private void ActivateShields()
-    {
-        shields = 4;
-    }
-
-    private void ActivateStasis()
-    {
-        //select target
-        //deactivate target
-    }
-
-    private void ActivateCommander()
-    {
-        //select dice
-        //select new face
-    }
-
-    private void ActivateMedic()
-    {
-        Dice[] diceInInfirmary = GameObject.Find("Infirmary Area").GetComponentsInChildren<Dice>();
-
-        foreach (Dice dice in diceInInfirmary)
-        {
-            dice.MoveArea("Returned Area");
-        }
-    }
-
-    private void ActivateWeapons()
-    {
-        if (weaponsUsed)
-        {
-            DealDamage();
-            DealDamage();
-        } else
-        {
-            DealDamage();
-        }
-    }
-
-    private void DealDamage()
-    {
-        //select target card
-        //reduce health by one
-    }
-
-    private void ActivateEngineering()
-    {
-        if (engineeringUsed)
-        {
-            hull += 2;
-        }
-        else
-        {
-            hull += 1;
-        }
-
-        if (hull > 8)
-        {
-            hull = 8;
-        }
-    }
-
-    private void ReduceScannersByOne()
-    {
-        Dice dice = GameObject.Find("Scanners").GetComponentInChildren<Dice>();
-        dice.MoveArea("Returned Area");
     }
 
     public void DamageHull(int dmg)
