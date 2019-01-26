@@ -21,16 +21,11 @@ public class Engineering : MonoBehaviour
     {
         if (ship.engineeringUsed)
         {
-            ship.hull += 2;
+            ship.RepairHull(2);
         }
         else
         {
-            ship.hull += 1;
-        }
-
-        if (ship.hull > 8)
-        {
-            ship.hull = 8;
+            ship.RepairHull(1);
         }
     }
 }

@@ -20,10 +20,7 @@ public class Shields : MonoBehaviour
 
     private void ActivateShields()
     {
-        if (!ship.shieldsDisabled)
-        {
-            ship.shields = 4;
-        }
+        ship.RefillShields();
     }
 
     private void ActivateStasis()

@@ -6,7 +6,7 @@ public class Game : MonoBehaviour
 {
     private Ship ship;
     private Dice[] allDice = new Dice[6];
-    private GameObject threatDeck;
+    private Deck threatDeck;
     public int currentStage;
         /* Stages:
          * 1. Roll Dice
@@ -22,29 +22,46 @@ public class Game : MonoBehaviour
     {
         ship = gameObject.GetComponentInChildren<Ship>();
         allDice = gameObject.GetComponentsInChildren<Dice>();
-        threatDeck = GameObject.Find("Threat Deck");
-        currentStage = 1;
+        threatDeck = GameObject.Find("Threat Deck").GetComponent<Deck>();
+        currentStage = 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            RollDice();
-        }
-    }
-
-    private void RollDice()
+    private void Step1()
     {
         Dice[] diceInHand = GameObject.Find("Hand Area").GetComponentsInChildren<Dice>();
         
         foreach (Dice dice in diceInHand)
         {
             dice.RollTheDice();
+        }
+    }
+
+    private void Step2()
+    {
+        Dice[] diceInHand = GameObject.Find("Hand Area").GetComponentsInChildren<Dice>();
+
+        foreach (Dice dice in diceInHand)
+        {
             dice.LockScanner();
             ship.CheckScanners();
         }
+    }
+
+    private void Step4()
+    {
+        threatDeck.DrawCard();
+    }
+
+    private void Step5()
+    {
+        //roll threat die and resolve
+    }
+
+    private void Step6()
+    {
+        ReturnDice();
+        //CheckForWin();
+        //CheckForLoss();
     }
 
     private void ReturnDice()

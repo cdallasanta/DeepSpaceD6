@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
-    public int hull = 8;
-    public int shields = 4;
-    public int scannersMax = 3;
-    public bool shieldsDisabled;
-    public bool commanderDisabled;
+    private int hull;
+    private int shields;
+    private int scannersMax;
+    private bool shieldsDisabled;
+    private bool commanderDisabled;
     private GameObject scanners;
     public Game game;
+
+    //TODO move to a function
     public Dice selectedDice;
 
-    //move these to the stations
+    //TODO move these to the stations
     public bool weaponsUsed;
     public bool engineeringUsed;
 
@@ -22,12 +24,15 @@ public class Ship : MonoBehaviour
     void Start()
     {
         scanners = GameObject.Find("Scanners");
+        scannersMax = 3;
         shieldsDisabled = false;
         commanderDisabled = false;
         game = gameObject.GetComponentInParent<Game>();
         weaponsUsed = false;
         engineeringUsed = false;
-    }
+        hull = 8;
+        shields = 4;
+}
 
     // Update is called once per frame
     void Update()
@@ -100,6 +105,24 @@ public class Ship : MonoBehaviour
         if (hull <= 0)
         {
             //game.GameOver;
+        }
+    }
+
+    public void RepairHull(int amount)
+    {
+        hull += amount;
+
+        if (hull > 8)
+        {
+            hull = 8;
+        }
+    }
+
+    public void RefillShields()
+    {
+        if (!shieldsDisabled)
+        {
+            shields = 4;
         }
     }
 
