@@ -21,4 +21,14 @@ public class Deck : MonoBehaviour
     {
 
     }
+
+    /*
+    public void ActivateCard(card)
+    {
+        if (card.GetType().GetMethod("OnActivation") != null)
+        {
+            card.OnActivation();
+        }
+    }
+    */
 }

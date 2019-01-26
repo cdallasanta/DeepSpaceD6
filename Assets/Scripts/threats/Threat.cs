@@ -9,13 +9,15 @@ public class Threat : MonoBehaviour
     public int MAXHP;
     public int currentHP;
     public int[] activationNums;
-    public Deck deck;
+    private Deck deck;
+    public Ship ship;
 
     private void Start()
     {
         deck = GameObject.Find("Threat Deck").GetComponent<Deck>();
-
         deck.cards.Add(this);
+
+        ship = GameObject.Find("Ship").GetComponent<Ship>();
     }
 
     public void ReduceHealth()
