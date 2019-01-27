@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ship : MonoBehaviour
 {
     private int hull;
-    private int shields;
+    public int shields;
     private int scannersMax;
     private bool shieldsDisabled;
     private bool commanderDisabled;

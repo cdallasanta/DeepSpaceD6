@@ -2,26 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AssaultCruiser1 : Threat
+public class BountyShip : Card
 {
+
     // Start is called before the first frame update
     void Start()
     {
-        title = "Assault Cruiser";
+        title = "Bounty Ship";
         type = "external";
         MAXHP = 4;
         currentHP = MAXHP;
-        activationNums = new int[] {4, 5};
+        activationNums = new int[] { 1, 2 };
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnActivation()
     {
-        
-    }
-
-    public void OnActivation()
-    {
-        ship.DamageHull(2);
+        ship.shields = 0;
+        ship.DamageHull(1);
     }
 }

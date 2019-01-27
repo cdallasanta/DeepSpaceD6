@@ -26,7 +26,7 @@ public class Game : MonoBehaviour
         currentStage = 0;
     }
 
-    private void Step1()
+    public void Step1()
     {
         Dice[] diceInHand = GameObject.Find("Hand Area").GetComponentsInChildren<Dice>();
         
@@ -36,7 +36,7 @@ public class Game : MonoBehaviour
         }
     }
 
-    private void Step2()
+    public void Step2()
     {
         Dice[] diceInHand = GameObject.Find("Hand Area").GetComponentsInChildren<Dice>();
 
@@ -47,17 +47,17 @@ public class Game : MonoBehaviour
         }
     }
 
-    private void Step4()
+    public void Step4()
     {
         threatDeck.DrawCard();
     }
 
-    private void Step5()
+    public void Step5()
     {
         //roll threat die and resolve
     }
 
-    private void Step6()
+    public void Step6()
     {
         ReturnDice();
         //CheckForWin();
