@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
-    private int hull;
+    public int hull;
     public int shields;
     private int scannersMax;
     private bool shieldsDisabled;
@@ -32,7 +32,7 @@ public class Ship : MonoBehaviour
         engineeringUsed = false;
         hull = 8;
         shields = 4;
-}
+    }
 
     public Game Game()
     {

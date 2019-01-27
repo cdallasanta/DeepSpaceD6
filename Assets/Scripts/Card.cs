@@ -26,8 +26,7 @@ public class Card : MonoBehaviour
 
     public virtual void AlternateDestruction()
     {
-        OnDestruction();
-        enabled = false;
+        DestroySelf();
     }
 
     public void ReduceHealth()

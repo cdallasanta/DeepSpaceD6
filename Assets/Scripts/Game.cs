@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEditor;
 
@@ -52,8 +53,7 @@ public class Game : MonoBehaviour
     public void Step5()
     {
         threatDiceSprite.enabled = true;
-        threatDice.RollDice();
-        //TODO resolve threats
+        ResolveThreats(threatDice.RollDice());
     }
 
     public void Step6()
@@ -118,6 +118,27 @@ public class Game : MonoBehaviour
         if (GameObject.Find("External Threats").GetComponentsInChildren<Dice>().Length == 0)
         {
             GameOver();
+        }
+    }
+
+    private void ResolveThreats(int diceNum)
+    {
+        Card[] externalCards = GameObject.Find("External Threats").GetComponentsInChildren<Card>();
+        foreach(Card card in externalCards)
+        {
+            if(Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
+            {
+                card.OnActivation();
+            }
+        }
+
+        Card[] internalCards = GameObject.Find("Internal Threats").GetComponentsInChildren<Card>();
+        foreach (Card card in internalCards)
+        {
+            if (Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
+            {
+                card.OnActivation();
+            }
         }
     }
 }
