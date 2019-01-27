@@ -9,18 +9,6 @@ public class Dice : MonoBehaviour
     private string face;
     public Ship ship;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     //used by Game to access the face variable when locking in scanners
     public string Face()
     {

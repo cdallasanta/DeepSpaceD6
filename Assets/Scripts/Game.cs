@@ -6,24 +6,29 @@ public class Game : MonoBehaviour
 {
     private Ship ship;
     private Dice[] allDice = new Dice[6];
-    private Deck threatDeck;
+    private Deck deck;
     public int currentStage;
-        /* Stages:
-         * 1. Roll Dice
-         * 2. Lock Threats
-         * 3. Assign Crew
-         * 4. Draw Threat
-         * 5. Roll Threat Dice
-         * 6. Return Crew
-         */
+    private ThreatDice threatDice;
+    private SpriteRenderer threatDiceSprite;
+    /* Stages:
+     * 1. Roll Dice
+     * 2. Lock Threats
+     * 3. Assign Crew
+     * 4. Draw Threat
+     * 5. Roll Threat Dice
+     * 6. Return Crew
+     */
 
     // Start is called before the first frame update
     void Start()
     {
         ship = gameObject.GetComponentInChildren<Ship>();
         allDice = gameObject.GetComponentsInChildren<Dice>();
-        threatDeck = GameObject.Find("Threat Deck").GetComponent<Deck>();
-        currentStage = 0;
+        deck = GameObject.Find("Threat Deck").GetComponent<Deck>();
+            deck.ShuffleDeck();
+        threatDice = GameObject.Find("Threat Dice").GetComponent<ThreatDice>();
+        threatDiceSprite = GameObject.Find("Threat Dice").GetComponent<SpriteRenderer>();
+        currentStage = 1;
     }
 
     public void Step1()
@@ -49,16 +54,19 @@ public class Game : MonoBehaviour
 
     public void Step4()
     {
-        threatDeck.DrawCard();
+        deck.DrawCard();
     }
 
     public void Step5()
     {
-        //roll threat die and resolve
+        threatDiceSprite.enabled = true;
+        threatDice.RollDice();
+        //resolve
     }
 
     public void Step6()
     {
+        threatDiceSprite.enabled = false;
         ReturnDice();
         //CheckForWin();
         //CheckForLoss();
@@ -78,25 +86,4 @@ public class Game : MonoBehaviour
             dice.MoveArea("Hand Area");
         }
     }
-    /*
-
-
-class Game
-  attr_accessor :all_dice, :ship, :game_areas, :all_dice, :threat_deck
-
-  def collect_dice
-
-
-  #turn order
-    #roll dice - done
-    #lock threats and resolve - need threat deck to becreated
-    #assign crew - how am I doing this?
-    #resolve stations
-    #draw threat - need threat deck
-    #roll threat dice and resolve
-    #collect dice
-
-  #check win
-end
-*/
 }
