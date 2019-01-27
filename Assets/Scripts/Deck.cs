@@ -13,6 +13,7 @@ public class Deck : MonoBehaviour
         {
             cards.Add(card);
         }
+        ShuffleDeck();
     }
 
     public void ShuffleDeck()
@@ -31,6 +32,7 @@ public class Deck : MonoBehaviour
     public void DrawCard()
     {
         Card cardToPlay = cards[cards.Count - 1];
+        cards.Remove(cardToPlay);
         cardToPlay.PlaceOnBoard();
     }
 }

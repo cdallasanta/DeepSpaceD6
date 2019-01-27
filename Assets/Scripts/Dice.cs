@@ -28,7 +28,7 @@ public class Dice : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (ship.game.currentStage == 3)
+        if (ship.game.currentStage == 2)
         {
             ship.selectedDice = this;
         }

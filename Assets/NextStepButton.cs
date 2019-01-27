@@ -22,7 +22,6 @@ public class NextStepButton : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log(gameStage);
         switch (gameStage)
         {
             case 1:

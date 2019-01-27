@@ -6,7 +6,7 @@ public class Game : MonoBehaviour
 {
     private Ship ship;
     private Dice[] allDice = new Dice[6];
-    private Deck deck;
+    public Deck deck;
     public int currentStage;
     private ThreatDice threatDice;
     private SpriteRenderer threatDiceSprite;
@@ -25,7 +25,6 @@ public class Game : MonoBehaviour
         ship = gameObject.GetComponentInChildren<Ship>();
         allDice = gameObject.GetComponentsInChildren<Dice>();
         deck = GameObject.Find("Threat Deck").GetComponent<Deck>();
-            deck.ShuffleDeck();
         threatDice = GameObject.Find("Threat Dice").GetComponent<ThreatDice>();
         threatDiceSprite = GameObject.Find("Threat Dice").GetComponent<SpriteRenderer>();
         currentStage = 1;
@@ -66,10 +65,16 @@ public class Game : MonoBehaviour
 
     public void Step6()
     {
+        CheckForWin();
+
         threatDiceSprite.enabled = false;
         ReturnDice();
-        //CheckForWin();
-        //CheckForLoss();
+        if(GameObject.Find("External Threats").GetComponentsInChildren<Dice>().Length == 0)
+        {
+            GameOver();
+        }
+
+        ship.NextTurn();
     }
 
     private void ReturnDice()
@@ -85,5 +90,26 @@ public class Game : MonoBehaviour
         {
             dice.MoveArea("Hand Area");
         }
+    }
+
+    public void GameOver()
+    {
+        //TODO
+    }
+
+    private void GameWon()
+    {
+        //TODO
+    }
+
+    private void CheckForWin()
+    {
+        if(deck.cards.Count == 0 &&
+            GameObject.Find("Internal Threats").GetComponentsInChildren<Card>().Length == 0 &&
+            GameObject.Find("External Threats").GetComponentsInChildren<Card>().Length == 0)
+        {
+            GameWon();
+        }
+
     }
 }

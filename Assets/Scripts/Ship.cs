@@ -34,12 +34,6 @@ public class Ship : MonoBehaviour
         shields = 4;
 }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public Game Game()
     {
         return game;
@@ -60,7 +54,7 @@ public class Ship : MonoBehaviour
 
     private void ResolveScanners()
     {
-        //TODO draw threat card
+        game.deck.DrawCard();
 
         Dice[] diceInScanners = gameObject.GetComponentsInChildren<Dice>();
 
@@ -94,7 +88,7 @@ public class Ship : MonoBehaviour
 
         if(hull <= 0)
         {
-            //game.GameOver;
+            game.GameOver();
         }
     }
 
@@ -104,7 +98,7 @@ public class Ship : MonoBehaviour
 
         if (hull <= 0)
         {
-            //game.GameOver;
+            game.GameOver();
         }
     }
 
