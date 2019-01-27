@@ -20,6 +20,15 @@ public class NextStepButton : MonoBehaviour
         txt.text = newText;
     }
 
+
+    /* Stages:
+     * 1. Roll Dice
+     * 2. Lock Threats
+     * 3. Assign Crew
+     * 4. Draw Threat
+     * 5. Roll Threat Dice
+     * 6. Return Crew
+     */
     public void OnClick()
     {
         switch (gameStage)

@@ -12,9 +12,11 @@ public class Card : MonoBehaviour
     public Deck deck;
     public Ship ship;
     public string[] alternateCost;
+    public bool disabled;
 
     private void Start()
     {
+        disabled = false;
         ship = GameObject.Find("Ship").GetComponent<Ship>();
     }
 

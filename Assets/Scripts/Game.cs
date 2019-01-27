@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Game : MonoBehaviour
 {
@@ -10,14 +11,6 @@ public class Game : MonoBehaviour
     public int currentStage;
     private ThreatDice threatDice;
     private SpriteRenderer threatDiceSprite;
-    /* Stages:
-     * 1. Roll Dice
-     * 2. Lock Threats
-     * 3. Assign Crew
-     * 4. Draw Threat
-     * 5. Roll Threat Dice
-     * 6. Return Crew
-     */
 
     // Start is called before the first frame update
     void Start()
@@ -60,21 +53,19 @@ public class Game : MonoBehaviour
     {
         threatDiceSprite.enabled = true;
         threatDice.RollDice();
-        //resolve
+        //TODO resolve threats
     }
 
     public void Step6()
     {
         CheckForWin();
 
-        threatDiceSprite.enabled = false;
         ReturnDice();
-        if(GameObject.Find("External Threats").GetComponentsInChildren<Dice>().Length == 0)
-        {
-            GameOver();
-        }
+        CheckForLoss();
 
         ship.NextTurn();
+        threatDiceSprite.enabled = false;
+        ResetStasis();
     }
 
     private void ReturnDice()
@@ -92,14 +83,23 @@ public class Game : MonoBehaviour
         }
     }
 
+    private void ResetStasis()
+    {
+        Card[] cardsOnField = GameObject.Find("Game").GetComponentsInChildren<Card>();
+        foreach(Card card in cardsOnField)
+        {
+            card.disabled = false;
+        }
+    }
+
     public void GameOver()
     {
-        //TODO
+        EditorUtility.DisplayDialog("Game Over", "You blew up! Oh no!", "Shoot dang!", "Yeah, I saw that coming.");
     }
 
     private void GameWon()
     {
-        //TODO
+        EditorUtility.DisplayDialog("You won!", "You defeated all the things! Way to go!", "You know I did!", "Ain't no thang.");
     }
 
     private void CheckForWin()
@@ -111,5 +111,13 @@ public class Game : MonoBehaviour
             GameWon();
         }
 
+    }
+
+    private void CheckForLoss()
+    {
+        if (GameObject.Find("External Threats").GetComponentsInChildren<Dice>().Length == 0)
+        {
+            GameOver();
+        }
     }
 }

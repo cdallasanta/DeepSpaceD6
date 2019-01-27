@@ -34,5 +34,10 @@ public class Deck : MonoBehaviour
         Card cardToPlay = cards[cards.Count - 1];
         cards.Remove(cardToPlay);
         cardToPlay.PlaceOnBoard();
+
+        if(cards.Count == 0)
+        {
+            GameObject.Find("Card Back").GetComponent<SpriteRenderer>().enabled = false;
+        }
     }
 }
