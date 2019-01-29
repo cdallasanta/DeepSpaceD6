@@ -23,7 +23,7 @@ public class CloakedThreats : Card
         if (firstPass)
         {
             firstPass = false;
-            game.Step5();
+            game.ResolveThreats(Random.Range(0,6));
             firstPass = true;
         }
     }

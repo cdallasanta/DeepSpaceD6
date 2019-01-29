@@ -8,6 +8,12 @@ public class Dice : MonoBehaviour
     public Sprite[] allSides = new Sprite[6];
     private string face;
     public Ship ship;
+    public SpriteRenderer spriteR;
+
+    private void Start()
+    {
+        spriteR = GetComponent<SpriteRenderer>();
+    }
 
     //used by Game to access the face variable when locking in scanners
     public string Face()
@@ -23,20 +29,25 @@ public class Dice : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().sprite = allSides[rand];
 
         //set face as it's current side so it can be called elsewhere
-        face = gameObject.GetComponent<SpriteRenderer>().sprite.name;
+        face = spriteR.sprite.name;
     }
 
     void OnMouseDown()
     {
-        if (ship.game.currentStage == 2)
+        if (ship.game.currentStage == 4)
         {
+            if (ship.selectedDice != null)
+            {
+                ship.selectedDice.spriteR.color = Color.white;
+            }
             ship.selectedDice = this;
+            spriteR.color = new Color(.55f, .74f, .22f, .5f);
         }
     }
 
     public void LockScanner()
     {
-        if (Face() == "scanners")
+        if (Face() == "Scanners")
         {
             MoveArea("Scanners");
         }

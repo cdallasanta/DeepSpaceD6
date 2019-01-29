@@ -11,6 +11,7 @@ public class Ship : MonoBehaviour
     private bool commanderDisabled;
     private GameObject scanners;
     public Game game;
+    public SpriteRenderer diceSpriteR;
 
     //TODO move to a function
     public Dice selectedDice;

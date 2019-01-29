@@ -6,12 +6,10 @@ using UnityEngine.UI;
 public class NextStepButton : MonoBehaviour
 {
     private Game game;
-    private int gameStage;
 
     private void Start()
     {
         game = GameObject.Find("Game").GetComponent<Game>();
-        gameStage = game.currentStage;
     }
 
     private void ChangeText(string newText)
@@ -27,35 +25,41 @@ public class NextStepButton : MonoBehaviour
      * 3. Assign Crew
      * 4. Draw Threat
      * 5. Roll Threat Dice
-     * 6. Return Crew
+     * 6. Resolve Threat Cards
+     * 7. Return Crew
      */
     public void OnClick()
     {
-        switch (gameStage)
+        switch (game.currentStage)
         {
             case 1:
                 game.Step1();
-                gameStage++;
+                game.currentStage++;
                 ChangeText("Lock Threats");
                 break;
             case 2:
                 game.Step2();
-                gameStage += 2; //skipping step 3, since players do things then
-                ChangeText("Draw Threat Card");
+                game.currentStage += 2; //skipping step 3, since players do things then
+                ChangeText("Done Assigning Crew,\nDraw Threat Card");
                 break;
             case 4:
                 game.Step4();
-                gameStage++;
+                game.currentStage++;
                 ChangeText("Roll Threat Dice");
                 break;
             case 5:
                 game.Step5();
-                gameStage++;
-                ChangeText("Next Round");
+                game.currentStage++;
+                ChangeText("Resolve Threat Cards");
                 break;
             case 6:
                 game.Step6();
-                gameStage = 1;
+                game.currentStage++;
+                ChangeText("Next Round");
+                break;
+            case 7:
+                game.Step7();
+                game.currentStage = 1;
                 ChangeText("Roll Dice");
                 break;
         }

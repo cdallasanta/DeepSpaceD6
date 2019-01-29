@@ -47,16 +47,22 @@ public class Game : MonoBehaviour
 
     public void Step4()
     {
+        ship.selectedDice = null;
         deck.DrawCard();
     }
 
     public void Step5()
     {
         threatDiceSprite.enabled = true;
-        ResolveThreats(threatDice.RollDice());
+        threatDice.RollDice();
     }
 
     public void Step6()
+    {
+        ResolveThreats(threatDice.face);
+    }
+
+    public void Step7()
     {
         CheckForWin();
 
@@ -89,12 +95,13 @@ public class Game : MonoBehaviour
         foreach(Card card in cardsOnField)
         {
             card.disabled = false;
+            card.spriteR.color = Color.white;
         }
     }
 
     public void GameOver()
     {
-        EditorUtility.DisplayDialog("Game Over", "You blew up! Oh no!", "Shoot dang!", "Yeah, I saw that coming.");
+        EditorUtility.DisplayDialog("Game Over", "You blew up! Oh no!", "Shoot dang!", "Bummer.");
     }
 
     private void GameWon()
@@ -104,7 +111,7 @@ public class Game : MonoBehaviour
 
     private void CheckForWin()
     {
-        if(deck.cards.Count == 0 &&
+        if (deck.cards.Count == 0 &&
             GameObject.Find("Internal Threats").GetComponentsInChildren<Card>().Length == 0 &&
             GameObject.Find("External Threats").GetComponentsInChildren<Card>().Length == 0)
         {
@@ -115,13 +122,13 @@ public class Game : MonoBehaviour
 
     private void CheckForLoss()
     {
-        if (GameObject.Find("External Threats").GetComponentsInChildren<Dice>().Length == 0)
+        if (GameObject.Find("Hand Area").GetComponentsInChildren<Dice>().Length == 0)
         {
             GameOver();
         }
     }
 
-    private void ResolveThreats(int diceNum)
+    public void ResolveThreats(int diceNum)
     {
         Card[] externalCards = GameObject.Find("External Threats").GetComponentsInChildren<Card>();
         foreach(Card card in externalCards)

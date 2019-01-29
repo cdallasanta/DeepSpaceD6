@@ -18,6 +18,9 @@ public class HullViz : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        spriteR.sprite = allSprites[ship.hull];
+        if (ship.hull >= 0)
+        {
+            spriteR.sprite = allSprites[ship.hull];
+        }
     }
 }

@@ -12,11 +12,24 @@ public class Engineering : MonoBehaviour
         ship = gameObject.GetComponentInParent<Ship>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnMouseDown()
     {
-
+        if (ship.game.currentStage == 4 &&
+            ship.selectedDice != null &&
+            ship.selectedDice.Face() == "Engineering")
+        {
+            ActivateEngineering();
+            PostActivationCleanup();
+        }
     }
+
+    private void PostActivationCleanup()
+    {
+        ship.selectedDice.MoveArea("Returned Area");
+        ship.selectedDice.spriteR.color = Color.white;
+        ship.selectedDice = null;
+    }
+
     private void ActivateEngineering()
     {
         if (ship.engineeringUsed)
@@ -26,6 +39,7 @@ public class Engineering : MonoBehaviour
         else
         {
             ship.RepairHull(1);
+            ship.engineeringUsed = true;
         }
     }
 }

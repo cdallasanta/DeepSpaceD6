@@ -13,11 +13,10 @@ public class Card : MonoBehaviour
     public Ship ship;
     public string[] alternateCost;
     public bool disabled;
+    public SpriteRenderer spriteR;
 
     private void Start()
     {
-        disabled = false;
-        ship = GameObject.Find("Ship").GetComponent<Ship>();
     }
 
     public virtual void OnActivation() { }
@@ -36,15 +35,20 @@ public class Card : MonoBehaviour
         if (currentHP <= 0)
         {
             DestroySelf();
+        } else
+        {
+            PlaceOnBoard();
         }
-
-        PlaceOnBoard();
     }
 
     public void DestroySelf()
     {
         OnDestruction();
-        enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+        
+        Transform newParent = GameObject.Find("Graveyard").transform;
+        gameObject.transform.SetParent(newParent, false);
+
     }
 
     public void HealByOne()

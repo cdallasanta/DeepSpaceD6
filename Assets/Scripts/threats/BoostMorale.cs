@@ -7,8 +7,7 @@ public class BoostMorale : Card
 
     // Start is called before the first frame update
     void Start()
-    {
-        title = "Boost Morale";
+    {   title = "Boost Morale";
         type = "internal";
         activationNums = new int[] { 6 };
     }
@@ -16,7 +15,10 @@ public class BoostMorale : Card
     public override void OnActivation()
     {
         Dice dice = GameObject.Find("Scanners").GetComponentInChildren<Dice>();
-        dice.MoveArea("Returned Area");
+        if (dice != null)
+        {
+            dice.MoveArea("Returned Area");
+        }
 
         DestroySelf();
     }
