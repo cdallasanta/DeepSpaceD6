@@ -20,7 +20,7 @@ public class HullViz : MonoBehaviour
     {
         if (ship.hull >= 0)
         {
-            spriteR.sprite = allSprites[ship.hull];
+            spriteR.sprite = allSprites[Mathf.Max(ship.hull, 0)];
         }
     }
 }

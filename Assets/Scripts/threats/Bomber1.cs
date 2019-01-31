@@ -17,14 +17,7 @@ public class Bomber1 : Card
 
     public override void OnActivation()
     {
-        Debug.Log("activation works");
-        
-        //ship.DamageHull(2);
+        ship.DamageHull(2);
         //send unit to infirmary
-    }
-
-    public override void OnDestruction()
-    {
-        Debug.Log("destruction works");
     }
 }

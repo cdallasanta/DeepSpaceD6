@@ -11,21 +11,43 @@ public class Card : MonoBehaviour
     public int[] activationNums;
     public Deck deck;
     public Ship ship;
-    public string[] alternateCost;
+    public List<string> alternateCost;
     public bool disabled;
     public SpriteRenderer spriteR;
 
     private void Start()
     {
+        
     }
 
     public virtual void OnActivation() { }
 
     public virtual void OnDestruction() { }
 
-    public virtual void AlternateDestruction()
+    private void OnMouseDown()
     {
-        DestroySelf();
+        if (ship.game.currentStage == 4 &&
+            ship.selectedDice != null &&
+            alternateCost.Count > 0 &&
+            alternateCost.Contains(ship.selectedDice.face))
+        {
+            alternateCost.Remove(ship.selectedDice.face);
+
+            ship.selectedDice.MoveArea(this.name);
+            ship.selectedDice.spriteR.color = Color.white;
+            ship.selectedDice = null;
+            
+            if (alternateCost.Count == 0)
+            {
+                Dice[] diceHere = GetComponentsInChildren<Dice>();
+                foreach(Dice dice in diceHere)
+                {
+                    dice.MoveArea("Returned Area");
+                }
+
+                DestroySelf();
+            }
+        }
     }
 
     public void ReduceHealth()
@@ -49,6 +71,7 @@ public class Card : MonoBehaviour
         Transform newParent = GameObject.Find("Graveyard").transform;
         gameObject.transform.SetParent(newParent, false);
 
+        ship.game.CheckForWin();
     }
 
     public void HealByOne()

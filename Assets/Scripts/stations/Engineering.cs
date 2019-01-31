@@ -16,7 +16,7 @@ public class Engineering : MonoBehaviour
     {
         if (ship.game.currentStage == 4 &&
             ship.selectedDice != null &&
-            ship.selectedDice.Face() == "Engineering")
+            ship.selectedDice.face == "Engineering")
         {
             ActivateEngineering();
             PostActivationCleanup();

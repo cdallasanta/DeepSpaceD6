@@ -20,7 +20,7 @@ public class Shields : MonoBehaviour
     {
         if (ship.game.currentStage == 4 &&
             ship.selectedDice != null &&
-            ship.selectedDice.Face() == "Shields")
+            ship.selectedDice.face == "Shields")
         {
             spriteR.color = new Color(.55f, .74f, .22f, .5f);
             ActivateShields();
@@ -34,14 +34,20 @@ public class Shields : MonoBehaviour
 
         foreach (Card card in externalThreats)
         {
-            card.spriteR.color = new Color(.55f, .74f, .22f, .5f);
+            if (!card.disabled)
+            {
+                card.spriteR.color = new Color(.62f, .79f, .46f, 1f);
+            }
         }
 
         Card[] internalThreats = GameObject.Find("Internal Threats").GetComponentsInChildren<Card>();
 
         foreach (Card card in internalThreats)
         {
-            card.spriteR.color = new Color(.55f, .74f, .22f, .5f);
+            if (!card.disabled)
+            {
+                card.spriteR.color = new Color(.62f, .79f, .46f, 1f);
+            }
         }
 
         shieldsSprite.color = new Color(.62f, 1f, 0f);
@@ -54,12 +60,16 @@ public class Shields : MonoBehaviour
         {
             PostActivationCleanup();
         }
+
+        ship.selectedDice.MoveArea("Returned Area");
+        ship.selectedDice.spriteR.color = Color.white;
+        ship.selectedDice = null;
     }
 
     IEnumerator ShieldsChoice()
     {
-        bool waitingForChoice = true;
-        while (waitingForChoice)
+        ship.waitingForChoice = true;
+        while (ship.waitingForChoice)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -70,16 +80,16 @@ public class Shields : MonoBehaviour
                     if (hit.collider.gameObject.transform.name == "Shield Sprite")
                     {
                         RefillShields();
-                        waitingForChoice = false;
+                        ship.waitingForChoice = false;
                     }
                     else if (hit.collider.gameObject.GetComponent<Card>() != null)
                     {
                         Stasis(hit.collider.gameObject.GetComponent<Card>());
-                        waitingForChoice = false;
+                        ship.waitingForChoice = false;
                     }
                 }
             }
-            if (!waitingForChoice)
+            if (!ship.waitingForChoice)
             {
                 PostActivationCleanup();
             }
@@ -101,10 +111,6 @@ public class Shields : MonoBehaviour
                 card.spriteR.color = Color.white;
             }
         }
-        //TODO, something's wrong here
-        ship.selectedDice.MoveArea("Returned Area");
-        ship.selectedDice.spriteR.color = Color.white;
-        ship.selectedDice = null;
     }
 
     private void RefillShields()
@@ -115,5 +121,6 @@ public class Shields : MonoBehaviour
     private void Stasis(Card target)
     {
         target.disabled = true;
+        target.spriteR.color = new Color(.65f, .65f, 1f, 1f);
     }
 }

@@ -12,6 +12,7 @@ public class Ship : MonoBehaviour
     private GameObject scanners;
     public Game game;
     public SpriteRenderer diceSpriteR;
+    public bool waitingForChoice;
 
     //TODO move to a function
     public Dice selectedDice;
@@ -77,6 +78,7 @@ public class Ship : MonoBehaviour
 
     public void DamageHull(int dmg)
     {
+        Debug.Log("dealing damage");
         if(shields >= dmg)
         {
             shields -= dmg;
@@ -86,21 +88,11 @@ public class Ship : MonoBehaviour
             shields = 0;
             hull -= dmg;
         }
-
-        if(hull <= 0)
-        {
-            game.GameOver();
-        }
     }
 
     public void DirectDamage(int dmg)
     {
         hull -= dmg;
-
-        if (hull <= 0)
-        {
-            game.GameOver();
-        }
     }
 
     public void RepairHull(int amount)

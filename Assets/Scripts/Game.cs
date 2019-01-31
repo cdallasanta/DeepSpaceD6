@@ -47,7 +47,11 @@ public class Game : MonoBehaviour
 
     public void Step4()
     {
-        ship.selectedDice = null;
+        if(ship.selectedDice != null)
+        {
+            ship.selectedDice.spriteR.color = Color.white;
+            ship.selectedDice = null;
+        }
         deck.DrawCard();
     }
 
@@ -60,12 +64,11 @@ public class Game : MonoBehaviour
     public void Step6()
     {
         ResolveThreats(threatDice.face);
+        CheckForWin();
     }
 
     public void Step7()
     {
-        CheckForWin();
-
         ReturnDice();
         CheckForLoss();
 
@@ -109,7 +112,7 @@ public class Game : MonoBehaviour
         EditorUtility.DisplayDialog("You won!", "You defeated all the things! Way to go!", "You know I did!", "Ain't no thang.");
     }
 
-    private void CheckForWin()
+    public void CheckForWin()
     {
         if (deck.cards.Count == 0 &&
             GameObject.Find("Internal Threats").GetComponentsInChildren<Card>().Length == 0 &&
@@ -120,9 +123,13 @@ public class Game : MonoBehaviour
 
     }
 
-    private void CheckForLoss()
+    public void CheckForLoss()
     {
         if (GameObject.Find("Hand Area").GetComponentsInChildren<Dice>().Length == 0)
+        {
+            GameOver();
+        }
+        if (ship.hull <= 0)
         {
             GameOver();
         }

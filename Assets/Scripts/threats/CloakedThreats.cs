@@ -15,7 +15,7 @@ public class CloakedThreats : Card
         activationNums = new int[] { 2 };
         game = GameObject.Find("Game").GetComponent<Game>();
         firstPass = true;
-        alternateCost = new string[] { "shields", "commander" };
+        alternateCost.AddRange(new string[] { "Shields", "Commander" });
     }
 
     public override void OnActivation()

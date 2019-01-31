@@ -21,14 +21,11 @@ public class Weapons : MonoBehaviour
     {
         if(ship.game.currentStage == 4 &&
             ship.selectedDice != null &&
-            ship.selectedDice.Face() == "Weapons")
+            ship.selectedDice.face == "Weapons")
         {
             ActivateWeapons();
         }
         
-        ship.selectedDice.MoveArea("Returned Area");
-        ship.selectedDice.spriteR.color = Color.white;
-        ship.selectedDice = null;
     }
 
     private void ActivateWeapons()
@@ -43,6 +40,11 @@ public class Weapons : MonoBehaviour
             StartCoroutine(DealDamage(1));
             ship.weaponsUsed = true;
         }
+
+
+        ship.selectedDice.MoveArea("Returned Area");
+        ship.selectedDice.spriteR.color = Color.white;
+        ship.selectedDice = null;
     }
 
     private void PostActivationCleanup()

@@ -18,7 +18,7 @@ public class Medic : MonoBehaviour
     {
         if (ship.game.currentStage == 4 &&
             ship.selectedDice != null &&
-            ship.selectedDice.Face() == "Medic")
+            ship.selectedDice.face == "Medic")
         {
             spriteR.color = new Color(.5f, .23f, .5f, .5f);
             ActivateMedic();
@@ -50,12 +50,16 @@ public class Medic : MonoBehaviour
         {
             PostActivationCleanup();
         }
+
+        ship.selectedDice.MoveArea("Returned Area");
+        ship.selectedDice.spriteR.color = Color.white;
+        ship.selectedDice = null;
     }
 
     IEnumerator MedicChoice()
     {
-        bool waitingForChoice = true;
-        while (waitingForChoice)
+        ship.waitingForChoice = true;
+        while (ship.waitingForChoice)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -66,15 +70,15 @@ public class Medic : MonoBehaviour
                     if (hit.collider.gameObject.transform.parent.name == "Scanners")
                     {
                         ReduceScannersByOne();
-                        waitingForChoice = false;
+                        ship.waitingForChoice = false;
                     } else if (hit.collider.gameObject.transform.parent.name == "Infirmary Area")
                     {
                         EmptyInfirmary();
-                        waitingForChoice = false;
+                        ship.waitingForChoice = false;
                     }
                 }
             }
-            if (!waitingForChoice)
+            if (!ship.waitingForChoice)
             {
                 PostActivationCleanup();
             }
@@ -92,10 +96,6 @@ public class Medic : MonoBehaviour
         {
             dice.spriteR.color = Color.white;
         }
-        //TODO, something's wrong here
-        ship.selectedDice.MoveArea("Returned Area");
-        ship.selectedDice.spriteR.color = Color.white;
-        ship.selectedDice = null;
     }
 
     private void EmptyInfirmary()
@@ -110,7 +110,7 @@ public class Medic : MonoBehaviour
 
     private void ReduceScannersByOne()
     {
-        Dice dice = GameObject.Find("Scanners").GetComponentInChildren<Dice>();
-        dice.MoveArea("Returned Area");
+        Dice[] dice = GameObject.Find("Scanners").GetComponentsInChildren<Dice>();
+        dice[0].MoveArea("Returned Area");
     }
 }
