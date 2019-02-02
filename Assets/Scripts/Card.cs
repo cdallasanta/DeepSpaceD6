@@ -15,42 +15,53 @@ public class Card : MonoBehaviour
     public bool disabled;
     public SpriteRenderer spriteR;
 
-    private void Start()
-    {
-        
-    }
+    public virtual void WhenPlayed() { }
 
     public virtual void OnActivation() { }
 
     public virtual void OnDestruction() { }
 
-    private void OnMouseDown()
-    {
+    public virtual void OnMouseDown()
+    {   /* 
+         * check that the game is accepting player input
+         * there is a selected dice,
+         * and that the card accepts the dice as an alternate cost
+         */
         if (ship.game.currentStage == 4 &&
             ship.selectedDice != null &&
             alternateCost.Count > 0 &&
             alternateCost.Contains(ship.selectedDice.face))
         {
-            alternateCost.Remove(ship.selectedDice.face);
-
-            ship.selectedDice.MoveArea(this.name);
-            ship.selectedDice.spriteR.color = Color.white;
-            ship.selectedDice = null;
-            
-            if (alternateCost.Count == 0)
+            //checks for the case of Cosmic Existentialism in play, the dice is Science, and they are targeting something else
+            //or Panel Explosion for engineering
+            if (!(ship.selectedDice.face == "Science" && ship.cosmicExistentialismInPlay && GameObject.Find("Cosmic Existentialism").GetComponent<Card>() != this) ||
+                !(ship.selectedDice.face == "Engineering" && GameObject.Find("Internal Threats").GetComponent<Card>() != null))
             {
-                Dice[] diceHere = GetComponentsInChildren<Dice>();
-                foreach(Dice dice in diceHere)
-                {
-                    dice.MoveArea("Returned Area");
-                }
+                alternateCost.Remove(ship.selectedDice.face);
+                ship.selectedDice.MoveAreaByCardName(this.name);
+                ship.selectedDice.spriteR.color = Color.white;
+                ship.selectedDice = null;
 
-                DestroySelf();
+                AlternateCostCheck();
             }
         }
     }
 
-    public void ReduceHealth()
+    private void AlternateCostCheck()
+    {
+        if (alternateCost.Count == 0)
+        {
+            Dice[] diceHere = GetComponentsInChildren<Dice>();
+            foreach (Dice dice in diceHere)
+            {
+                dice.MoveArea("Returned Area");
+            }
+
+            DestroySelf();
+        }
+    }
+
+    public virtual void ReduceHealth()
     {
         currentHP -= 1;
 

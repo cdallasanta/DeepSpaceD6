@@ -2,33 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shields : MonoBehaviour
+public class Science : MonoBehaviour
 {
     private Ship ship;
     private SpriteRenderer spriteR;
-    private SpriteRenderer shieldsSprite;
+    private SpriteRenderer scienceSprite;
 
     // Start is called before the first frame update
     void Start()
     {
         ship = gameObject.GetComponentInParent<Ship>();
         spriteR = GetComponent<SpriteRenderer>();
-        shieldsSprite = GameObject.Find("Shield Sprite").GetComponent<SpriteRenderer>();
+        scienceSprite = GameObject.Find("Shield Sprite").GetComponent<SpriteRenderer>();
     }
 
     void OnMouseDown()
     {
+        //checking to make sure Cosmic Existentialism isn't in play
         if (ship.game.currentStage == 4 &&
             ship.selectedDice != null &&
-            ship.selectedDice.face == "Shields")
+            ship.selectedDice.face == "Science" &&
+            GameObject.Find("Internal Threats").GetComponentInChildren<CosmicExistentialism>() == null)
         {
             spriteR.color = new Color(.55f, .74f, .22f, .5f);
-            ActivateShields();
+            ActivateScience();
         }
     }
 
 
-    private void ActivateShields()
+    private void ActivateScience()
     {
         Card[] externalThreats = GameObject.Find("External Threats").GetComponentsInChildren<Card>();
 
@@ -50,11 +52,11 @@ public class Shields : MonoBehaviour
             }
         }
 
-        shieldsSprite.color = new Color(.62f, 1f, 0f);
+        scienceSprite.color = new Color(.62f, 1f, 0f);
 
         if (externalThreats.Length != 0 || internalThreats.Length != 0 || ship.shields < 4)
         {
-            StartCoroutine(ShieldsChoice());
+            StartCoroutine(ScienceChoice());
         }
         else
         {
@@ -66,7 +68,7 @@ public class Shields : MonoBehaviour
         ship.selectedDice = null;
     }
 
-    IEnumerator ShieldsChoice()
+    IEnumerator ScienceChoice()
     {
         ship.waitingForChoice = true;
         while (ship.waitingForChoice)
@@ -101,7 +103,7 @@ public class Shields : MonoBehaviour
     private void PostActivationCleanup()
     {
         spriteR.color = Color.white;
-        shieldsSprite.color = Color.white;
+        scienceSprite.color = Color.white;
 
         Card[] allCards = GameObject.Find("Game").GetComponentsInChildren<Card>();
         foreach (Card card in allCards)

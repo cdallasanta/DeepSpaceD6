@@ -5,7 +5,7 @@ TextureImporter:
     21300000: Commander
     21300002: Weapons
     21300004: Medic
-    21300006: Shields
+    21300006: Science
     21300008: Engineering
     21300010: Scanners
   externalObjects: {}
@@ -150,7 +150,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shields
+      name: Science
       rect:
         serializedVersion: 2
         x: 1367

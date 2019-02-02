@@ -12,6 +12,7 @@ public class Game : MonoBehaviour
     public int currentStage;
     private ThreatDice threatDice;
     private SpriteRenderer threatDiceSprite;
+    public bool threatActivated;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,7 @@ public class Game : MonoBehaviour
         threatDice = GameObject.Find("Threat Dice").GetComponent<ThreatDice>();
         threatDiceSprite = GameObject.Find("Threat Dice").GetComponent<SpriteRenderer>();
         currentStage = 1;
+        threatActivated = false;
     }
 
     public void Step1()
@@ -63,8 +65,16 @@ public class Game : MonoBehaviour
 
     public void Step6()
     {
+        //this bit of math is in case the scouting ship is in play, which deals 1 damage if damage has happened this round
+        int shipInitialHealth = ship.hull + ship.shields;
+
         ResolveThreats(threatDice.face);
         CheckForWin();
+
+        if(shipInitialHealth > (ship.hull + ship.shields) && GameObject.Find("External Threats").GetComponentInChildren<ScoutingShip>() != null)
+        {
+            ship.DamageHull(1);
+        }
     }
 
     public void Step7()
@@ -74,6 +84,7 @@ public class Game : MonoBehaviour
 
         ship.NextTurn();
         threatDiceSprite.enabled = false;
+        threatActivated = false;
         ResetStasis();
     }
 
@@ -142,6 +153,7 @@ public class Game : MonoBehaviour
         {
             if(Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
             {
+                threatActivated = true;
                 card.OnActivation();
             }
         }
@@ -151,6 +163,7 @@ public class Game : MonoBehaviour
         {
             if (Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
             {
+                threatActivated = true;
                 card.OnActivation();
             }
         }
