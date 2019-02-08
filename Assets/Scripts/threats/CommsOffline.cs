@@ -6,7 +6,6 @@ public class CommsOffline : Card
 {
     public override void WhenPlayed()
     {
-        //TODO make this do something. it's not checked anywhere
         ship.commanderDisabled = true;
     }
 

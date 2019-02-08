@@ -11,7 +11,7 @@ public class FriendlyFire : Card
         {
             if (dice.face == "Weapons")
             {
-                dice.MoveArea("Infirmary");
+                dice.MoveArea("Infirmary Area");
             }
         }
 

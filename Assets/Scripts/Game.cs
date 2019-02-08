@@ -12,7 +12,6 @@ public class Game : MonoBehaviour
     public int currentStage;
     private ThreatDice threatDice;
     private SpriteRenderer threatDiceSprite;
-    public bool threatActivated;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +22,6 @@ public class Game : MonoBehaviour
         threatDice = GameObject.Find("Threat Dice").GetComponent<ThreatDice>();
         threatDiceSprite = GameObject.Find("Threat Dice").GetComponent<SpriteRenderer>();
         currentStage = 1;
-        threatActivated = false;
     }
 
     public void Step1()
@@ -61,6 +59,27 @@ public class Game : MonoBehaviour
     {
         threatDiceSprite.enabled = true;
         threatDice.RollDice();
+
+        //testing
+        int diceNum = threatDice.face;
+
+        Card[] externalCards = GameObject.Find("External Threats").GetComponentsInChildren<Card>();
+        foreach (Card card in externalCards)
+        {
+            if (Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
+            {
+                card.spriteR.color = new Color(.9f, .25f, .22f);
+            }
+        }
+
+        Card[] internalCards = GameObject.Find("Internal Threats").GetComponentsInChildren<Card>();
+        foreach (Card card in internalCards)
+        {
+            if (Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
+            {
+                card.spriteR.color = new Color(.9f, .25f, .22f);
+            }
+        }
     }
 
     public void Step6()
@@ -84,7 +103,6 @@ public class Game : MonoBehaviour
 
         ship.NextTurn();
         threatDiceSprite.enabled = false;
-        threatActivated = false;
         ResetStasis();
     }
 
@@ -148,11 +166,13 @@ public class Game : MonoBehaviour
 
     public void ResolveThreats(int diceNum)
     {
+        bool threatActivated = false;
         Card[] externalCards = GameObject.Find("External Threats").GetComponentsInChildren<Card>();
         foreach(Card card in externalCards)
         {
             if(Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
             {
+                Debug.Log(card.spriteR.sprite.name);
                 threatActivated = true;
                 card.OnActivation();
             }
@@ -163,9 +183,16 @@ public class Game : MonoBehaviour
         {
             if (Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
             {
+                Debug.Log(card.spriteR.sprite.name);
                 threatActivated = true;
                 card.OnActivation();
             }
+        }
+
+        //this is for if the mercenary is in play. If no threats were activated, deal damage
+        if(!threatActivated && GameObject.Find("External Threats").GetComponentInChildren<Mercenary>() != null)
+        {
+            ship.DamageHull(2);
         }
     }
 }

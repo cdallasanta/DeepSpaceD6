@@ -5,19 +5,20 @@ using UnityEngine;
 public class Engineering : MonoBehaviour
 {
     private Ship ship;
+    public bool engineeringUsed;
 
     // Start is called before the first frame update
     void Start()
     {
         ship = gameObject.GetComponentInParent<Ship>();
+        engineeringUsed = false;
     }
 
     void OnMouseDown()
     {
         if (ship.game.currentStage == 4 &&
             ship.selectedDice != null &&
-            ship.selectedDice.face == "Engineering" &&
-            ship.engineeringDisabled == false)
+            ship.selectedDice.face == "Engineering")
         {
             ActivateEngineering();
             PostActivationCleanup();
@@ -33,14 +34,14 @@ public class Engineering : MonoBehaviour
 
     private void ActivateEngineering()
     {
-        if (ship.engineeringUsed)
+        if (engineeringUsed)
         {
             ship.RepairHull(2);
         }
         else
         {
             ship.RepairHull(1);
-            ship.engineeringUsed = true;
+            engineeringUsed = true;
         }
     }
 }

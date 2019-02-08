@@ -15,13 +15,7 @@ public class Ship : MonoBehaviour
     public Game game;
     public SpriteRenderer diceSpriteR;
     public bool waitingForChoice;
-
-    //TODO move to a function
     public Dice selectedDice;
-
-    //TODO move these to the stations
-    public bool weaponsUsed;
-    public bool engineeringUsed;
 
 
     // Start is called before the first frame update
@@ -34,8 +28,6 @@ public class Ship : MonoBehaviour
         engineeringDisabled = false;
         cosmicExistentialismInPlay = false;
         game = gameObject.GetComponentInParent<Game>();
-        weaponsUsed = false;
-        engineeringUsed = false;
         hull = 8;
         shields = 4;
     }
@@ -72,7 +64,6 @@ public class Ship : MonoBehaviour
 
     public void DamageHull(int dmg)
     {
-        Debug.Log("dealing damage");
         if(shields >= dmg)
         {
             shields -= dmg;
@@ -109,8 +100,8 @@ public class Ship : MonoBehaviour
 
     public void NextTurn()
     {
-        weaponsUsed = false;
-        engineeringUsed = false;
+        gameObject.GetComponentInChildren<Weapons>().weaponsUsed = false;
+        gameObject.GetComponentInChildren<Engineering>().engineeringUsed = false;
     }
 
     public void SendDiceToInfirmary()

@@ -68,14 +68,23 @@ public class Dice : MonoBehaviour
     {
         if (ship.game.currentStage == 4 && !ship.waitingForChoice && transform.parent.name == "Hand Area")
         {
-            if (ship.selectedDice != null)
+            //checking if comms offline has disabled commander and the dice is a commander
+            //or for panel explosion and engineer
+            Debug.Log(ship.commanderDisabled);
+            Debug.Log(spriteR.sprite.name);
+            //Debug.Log(ship.engineeringDisabled && spriteR.name == "Engineer");
+            if (!(ship.commanderDisabled && spriteR.sprite.name == "Commander") &&
+                !(ship.engineeringDisabled && spriteR.sprite.name == "Engineering"))
             {
-                ship.selectedDice.spriteR.color = Color.white;
-            }
-            ship.selectedDice = this;
-            spriteR.color = new Color(.55f, .74f, .22f, .5f);
+                if (ship.selectedDice != null)
+                {
+                    ship.selectedDice.spriteR.color = Color.white;
+                }
+                ship.selectedDice = this;
+                spriteR.color = new Color(.55f, .74f, .22f, .5f);
 
-            ChangeColor();
+                ChangeColor();
+            }
         }
     }
 

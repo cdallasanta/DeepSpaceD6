@@ -9,11 +9,16 @@ public class Pandemic : Card
         ship.SendDiceToInfirmary();
     }
 
-    public override void WhenPlayed()
+    public override void OnMouseDown()
     {
-        base.WhenPlayed();
+        base.OnMouseDown();
         if(alternateCost.Count <= 1)
         {
+            Dice[] diceHere = GetComponentsInChildren<Dice>();
+            foreach (Dice dice in diceHere)
+            {
+                dice.MoveArea("Returned Area");
+            }
             DestroySelf();
         }
     }

@@ -6,14 +6,14 @@ public class Science : MonoBehaviour
 {
     private Ship ship;
     private SpriteRenderer spriteR;
-    private SpriteRenderer scienceSprite;
+    private SpriteRenderer shieldSprite;
 
     // Start is called before the first frame update
     void Start()
     {
         ship = gameObject.GetComponentInParent<Ship>();
         spriteR = GetComponent<SpriteRenderer>();
-        scienceSprite = GameObject.Find("Shield Sprite").GetComponent<SpriteRenderer>();
+        shieldSprite = GameObject.Find("Shield Sprite").GetComponent<SpriteRenderer>();
     }
 
     void OnMouseDown()
@@ -52,7 +52,10 @@ public class Science : MonoBehaviour
             }
         }
 
-        scienceSprite.color = new Color(.62f, 1f, 0f);
+        if (!ship.shieldsDisabled)
+        {
+            shieldSprite.color = new Color(.62f, 1f, 0f);
+        }
 
         if (externalThreats.Length != 0 || internalThreats.Length != 0 || ship.shields < 4)
         {
@@ -103,7 +106,7 @@ public class Science : MonoBehaviour
     private void PostActivationCleanup()
     {
         spriteR.color = Color.white;
-        scienceSprite.color = Color.white;
+        shieldSprite.color = Color.white;
 
         Card[] allCards = GameObject.Find("Game").GetComponentsInChildren<Card>();
         foreach (Card card in allCards)

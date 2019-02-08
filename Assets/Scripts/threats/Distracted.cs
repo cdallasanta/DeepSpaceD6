@@ -7,7 +7,7 @@ public class Distracted : Card
     public override void WhenPlayed()
     {
         /* checks each area: returned, hand, internal, and external threats for a dice,
-         * grabs the diec and puts it on this card.
+         * grabs the dice and puts it on this card.
          * if it came from a threat, add it back on to that card's alternate cost
          */
         if (GameObject.Find("Returned Area").GetComponentInChildren<Dice>() != null)
@@ -31,12 +31,20 @@ public class Distracted : Card
             dice.MoveArea("Distracted Dice");
         }
 
-        GameObject.Find("Distracted Dice").GetComponentInChildren<Dice>().distracted = true;
+        Dice distractedDice = GameObject.Find("Distracted Dice").GetComponentInChildren<Dice>();
+        distractedDice.distracted = true;
+        //distractedDice.transform.localPosition = new Vector2(0, 0);
+        Debug.Log(distractedDice.transform.localPosition);
+    }
+
+    public override void OnActivation()
+    {
+        DestroySelf();
     }
 
     public override void OnDestruction()
     {
-        foreach(Dice dice in GameObject.Find("Distracted Dice").GetComponentsInChildren<Dice>())
+        foreach(Dice dice in gameObject.GetComponentsInChildren<Dice>())
         {
             dice.MoveArea("Returned Area");
             dice.distracted = false;
