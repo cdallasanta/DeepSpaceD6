@@ -33,8 +33,6 @@ public class Distracted : Card
 
         Dice distractedDice = GameObject.Find("Distracted Dice").GetComponentInChildren<Dice>();
         distractedDice.distracted = true;
-        //distractedDice.transform.localPosition = new Vector2(0, 0);
-        Debug.Log(distractedDice.transform.localPosition);
     }
 
     public override void OnActivation()

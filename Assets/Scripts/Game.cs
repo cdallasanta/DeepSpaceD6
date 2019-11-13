@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using UnityEditor;
 
 public class Game : MonoBehaviour
 {
@@ -133,12 +132,14 @@ public class Game : MonoBehaviour
 
     public void GameOver()
     {
-        EditorUtility.DisplayDialog("Game Over", "You blew up! Oh no!", "Shoot dang!", "Bummer.");
+        threatDiceSprite.enabled = false;
+        GetComponent<EndgameWindow>().GameLost();
     }
 
     private void GameWon()
     {
-        EditorUtility.DisplayDialog("You won!", "You defeated all the things! Way to go!", "You know I did!", "Ain't no thang.");
+        threatDiceSprite.enabled = false;
+        GetComponent<EndgameWindow>().GameWon();
     }
 
     public void CheckForWin()
@@ -172,7 +173,6 @@ public class Game : MonoBehaviour
         {
             if(Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
             {
-                Debug.Log(card.spriteR.sprite.name);
                 threatActivated = true;
                 card.OnActivation();
             }
@@ -183,7 +183,6 @@ public class Game : MonoBehaviour
         {
             if (Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
             {
-                Debug.Log(card.spriteR.sprite.name);
                 threatActivated = true;
                 card.OnActivation();
             }

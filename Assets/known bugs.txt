@@ -1,5 +1,9 @@
 leftover weapons with Solar Winds in play
 so many comments needed in code
+screen resolution
+end game window resolution
+
+in progress:
 
 
 fixed:

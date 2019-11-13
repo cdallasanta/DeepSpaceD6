@@ -81,8 +81,6 @@ public class Card : MonoBehaviour
         
         Transform newParent = GameObject.Find("Graveyard").transform;
         gameObject.transform.SetParent(newParent, false);
-
-        ship.game.CheckForWin();
     }
 
     public void HealByOne()
