@@ -36,6 +36,7 @@ public class Deck : MonoBehaviour
             Card cardToPlay = cards[cards.Count - 1];
             cards.Remove(cardToPlay);
             cardToPlay.PlaceOnBoard();
+            cardToPlay.WhenPlayed();
 
             if (cards.Count == 0)
             {

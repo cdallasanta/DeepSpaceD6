@@ -10,12 +10,8 @@ public class CloakedThreats : Card
     // Start is called before the first frame update
     void Start()
     {
-        title = "CLoaked Threats";
-        type = "internal";
-        activationNums = new int[] { 2 };
         game = GameObject.Find("Game").GetComponent<Game>();
         firstPass = true;
-        alternateCost.AddRange(new string[] { "Shields", "Commander" });
     }
 
     public override void OnActivation()

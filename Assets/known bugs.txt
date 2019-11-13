@@ -1,0 +1,20 @@
+leftover weapons with Solar Winds in play
+so many comments needed in code
+screen resolution
+end game window resolution
+
+in progress:
+
+
+fixed:
+-cloaked threats not receiving alternate cost?
+-mercenary not activating, not it's always activating
+-Nebula, shields disabled don't make it selectable
+-friendly fire error
+-test time warp
+-distracted not activating
+-infirmary 4 dice weird
+-panel explosion not working perfectly, can assign engineer to card
+-comms offline causing issues? not working at all now
+-pandemic sending it's dice back weirdly
+-distracted pulling the distracted dice to the wrong place

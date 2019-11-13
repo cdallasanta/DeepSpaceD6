@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using UnityEditor;
 
 public class Game : MonoBehaviour
 {
@@ -59,12 +58,41 @@ public class Game : MonoBehaviour
     {
         threatDiceSprite.enabled = true;
         threatDice.RollDice();
+
+        //testing
+        int diceNum = threatDice.face;
+
+        Card[] externalCards = GameObject.Find("External Threats").GetComponentsInChildren<Card>();
+        foreach (Card card in externalCards)
+        {
+            if (Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
+            {
+                card.spriteR.color = new Color(.9f, .25f, .22f);
+            }
+        }
+
+        Card[] internalCards = GameObject.Find("Internal Threats").GetComponentsInChildren<Card>();
+        foreach (Card card in internalCards)
+        {
+            if (Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
+            {
+                card.spriteR.color = new Color(.9f, .25f, .22f);
+            }
+        }
     }
 
     public void Step6()
     {
+        //this bit of math is in case the scouting ship is in play, which deals 1 damage if damage has happened this round
+        int shipInitialHealth = ship.hull + ship.shields;
+
         ResolveThreats(threatDice.face);
         CheckForWin();
+
+        if(shipInitialHealth > (ship.hull + ship.shields) && GameObject.Find("External Threats").GetComponentInChildren<ScoutingShip>() != null)
+        {
+            ship.DamageHull(1);
+        }
     }
 
     public void Step7()
@@ -104,12 +132,14 @@ public class Game : MonoBehaviour
 
     public void GameOver()
     {
-        EditorUtility.DisplayDialog("Game Over", "You blew up! Oh no!", "Shoot dang!", "Bummer.");
+        threatDiceSprite.enabled = false;
+        GetComponent<EndgameWindow>().GameLost();
     }
 
     private void GameWon()
     {
-        EditorUtility.DisplayDialog("You won!", "You defeated all the things! Way to go!", "You know I did!", "Ain't no thang.");
+        threatDiceSprite.enabled = false;
+        GetComponent<EndgameWindow>().GameWon();
     }
 
     public void CheckForWin()
@@ -137,11 +167,13 @@ public class Game : MonoBehaviour
 
     public void ResolveThreats(int diceNum)
     {
+        bool threatActivated = false;
         Card[] externalCards = GameObject.Find("External Threats").GetComponentsInChildren<Card>();
         foreach(Card card in externalCards)
         {
             if(Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
             {
+                threatActivated = true;
                 card.OnActivation();
             }
         }
@@ -151,8 +183,15 @@ public class Game : MonoBehaviour
         {
             if (Array.Exists(card.activationNums, num => num == diceNum) && !card.disabled)
             {
+                threatActivated = true;
                 card.OnActivation();
             }
+        }
+
+        //this is for if the mercenary is in play. If no threats were activated, deal damage
+        if(!threatActivated && GameObject.Find("External Threats").GetComponentInChildren<Mercenary>() != null)
+        {
+            ship.DamageHull(2);
         }
     }
 }

@@ -11,11 +11,13 @@ public class Dice : MonoBehaviour
     public SpriteRenderer spriteR;
     public int faceNum;
     public Minidice[] miniDice;
+    public bool distracted;
 
     private void Start()
     {
         spriteR = GetComponent<SpriteRenderer>();
         miniDice = gameObject.GetComponentsInChildren<Minidice>();
+        distracted = false;
     }
 
     //this method is called by Game to roll each dice and set it's face value to the name of its face
@@ -64,16 +66,25 @@ public class Dice : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (ship.game.currentStage == 4 && !ship.waitingForChoice)
+        if (ship.game.currentStage == 4 && !ship.waitingForChoice && transform.parent.name == "Hand Area")
         {
-            if (ship.selectedDice != null)
+            //checking if comms offline has disabled commander and the dice is a commander
+            //or for panel explosion and engineer
+            Debug.Log(ship.commanderDisabled);
+            Debug.Log(spriteR.sprite.name);
+            //Debug.Log(ship.engineeringDisabled && spriteR.name == "Engineer");
+            if (!(ship.commanderDisabled && spriteR.sprite.name == "Commander") &&
+                !(ship.engineeringDisabled && spriteR.sprite.name == "Engineering"))
             {
-                ship.selectedDice.spriteR.color = Color.white;
-            }
-            ship.selectedDice = this;
-            spriteR.color = new Color(.55f, .74f, .22f, .5f);
+                if (ship.selectedDice != null)
+                {
+                    ship.selectedDice.spriteR.color = Color.white;
+                }
+                ship.selectedDice = this;
+                spriteR.color = new Color(.55f, .74f, .22f, .5f);
 
-            ChangeColor();
+                ChangeColor();
+            }
         }
     }
 
@@ -84,7 +95,7 @@ public class Dice : MonoBehaviour
             case "Commander":
                 spriteR.color = new Color(.7f, .65f, .99f, 1f);
                 break;
-            case "Shields":
+            case "Science":
                 spriteR.color = new Color(.55f, .74f, .22f, .5f);
                 break;
             case "Weapons":
@@ -110,6 +121,13 @@ public class Dice : MonoBehaviour
     public void MoveArea(string newArea)
     {
         Transform newParent = GameObject.Find(newArea).transform;
+        gameObject.transform.SetParent(newParent, false);
+    }
+
+    public void MoveAreaByCardName(string card)
+    {
+        GameObject newArea = GameObject.Find(card);
+        Transform newParent = newArea.transform.Find("Alternate Cost Dice").transform;
         gameObject.transform.SetParent(newParent, false);
     }
 }

@@ -60,17 +60,61 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AssaultCruiser1.cs" />
-    <Compile Include="Assets\Deck.cs" />
+    <Compile Include="Assets\Scripts\Background.cs" />
+    <Compile Include="Assets\Scripts\Card.cs" />
+    <Compile Include="Assets\Scripts\Deck.cs" />
     <Compile Include="Assets\Scripts\Dice.cs" />
+    <Compile Include="Assets\Scripts\EndgameWindow.cs" />
     <Compile Include="Assets\Scripts\Game.cs" />
+    <Compile Include="Assets\Scripts\HullViz.cs" />
+    <Compile Include="Assets\Scripts\Minidice.cs" />
+    <Compile Include="Assets\Scripts\NextStepButton.cs" />
+    <Compile Include="Assets\Scripts\ShieldViz.cs" />
     <Compile Include="Assets\Scripts\Ship.cs" />
     <Compile Include="Assets\Scripts\stations\Commander.cs" />
     <Compile Include="Assets\Scripts\stations\Engineering.cs" />
     <Compile Include="Assets\Scripts\stations\Medic.cs" />
-    <Compile Include="Assets\Scripts\stations\Shields.cs" />
+    <Compile Include="Assets\Scripts\stations\Science.cs" />
     <Compile Include="Assets\Scripts\stations\Weapons.cs" />
-    <Compile Include="Assets\Scripts\threats\Threat.cs" />
+    <Compile Include="Assets\Scripts\ThreatDice.cs" />
+    <Compile Include="Assets\Scripts\threats\AssaultCruiser1.cs" />
+    <Compile Include="Assets\Scripts\threats\AssaultCruiser2.cs" />
+    <Compile Include="Assets\Scripts\threats\BoardingShip.cs" />
+    <Compile Include="Assets\Scripts\threats\Bomber1.cs" />
+    <Compile Include="Assets\Scripts\threats\Bomber2.cs" />
+    <Compile Include="Assets\Scripts\threats\Bomber3.cs" />
+    <Compile Include="Assets\Scripts\threats\BoostMorale.cs" />
+    <Compile Include="Assets\Scripts\threats\BountyShip.cs" />
+    <Compile Include="Assets\Scripts\threats\CloakedThreats.cs" />
+    <Compile Include="Assets\Scripts\threats\CommsOffline.cs" />
+    <Compile Include="Assets\Scripts\threats\Corsair.cs" />
+    <Compile Include="Assets\Scripts\threats\CosmicExistentialism.cs" />
+    <Compile Include="Assets\Scripts\threats\Distracted.cs" />
+    <Compile Include="Assets\Scripts\threats\DontPanic.cs" />
+    <Compile Include="Assets\Scripts\threats\Drone1.cs" />
+    <Compile Include="Assets\Scripts\threats\Drone2.cs" />
+    <Compile Include="Assets\Scripts\threats\Flagship.cs" />
+    <Compile Include="Assets\Scripts\threats\FriendlyFire.cs" />
+    <Compile Include="Assets\Scripts\threats\Hijackers.cs" />
+    <Compile Include="Assets\Scripts\threats\Intercepter.cs" />
+    <Compile Include="Assets\Scripts\threats\IntercepterX.cs" />
+    <Compile Include="Assets\Scripts\threats\Invaders.cs" />
+    <Compile Include="Assets\Scripts\threats\Mercenary.cs" />
+    <Compile Include="Assets\Scripts\threats\Meteoroid.cs" />
+    <Compile Include="Assets\Scripts\threats\Nebula.cs" />
+    <Compile Include="Assets\Scripts\threats\Pandemic.cs" />
+    <Compile Include="Assets\Scripts\threats\PanelExplosion.cs" />
+    <Compile Include="Assets\Scripts\threats\Raiders1.cs" />
+    <Compile Include="Assets\Scripts\threats\Raiders2.cs" />
+    <Compile Include="Assets\Scripts\threats\Raiders3.cs" />
+    <Compile Include="Assets\Scripts\threats\RobotUprising.cs" />
+    <Compile Include="Assets\Scripts\threats\ScoutingShip.cs" />
+    <Compile Include="Assets\Scripts\threats\SolarWinds.cs" />
+    <Compile Include="Assets\Scripts\threats\SpacePirates1.cs" />
+    <Compile Include="Assets\Scripts\threats\SpacePirates2.cs" />
+    <Compile Include="Assets\Scripts\threats\SpacePirates3.cs" />
+    <Compile Include="Assets\Scripts\threats\TimeWarp.cs" />
+    <None Include="Assets\known bugs.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Chris/Documents/Unity/Projects/2d D6/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

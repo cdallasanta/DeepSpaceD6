@@ -5,11 +5,13 @@ using UnityEngine;
 public class Engineering : MonoBehaviour
 {
     private Ship ship;
+    public bool engineeringUsed;
 
     // Start is called before the first frame update
     void Start()
     {
         ship = gameObject.GetComponentInParent<Ship>();
+        engineeringUsed = false;
     }
 
     void OnMouseDown()
@@ -32,14 +34,14 @@ public class Engineering : MonoBehaviour
 
     private void ActivateEngineering()
     {
-        if (ship.engineeringUsed)
+        if (engineeringUsed)
         {
             ship.RepairHull(2);
         }
         else
         {
             ship.RepairHull(1);
-            ship.engineeringUsed = true;
+            engineeringUsed = true;
         }
     }
 }

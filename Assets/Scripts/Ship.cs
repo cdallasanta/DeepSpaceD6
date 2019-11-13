@@ -7,19 +7,15 @@ public class Ship : MonoBehaviour
     public int hull;
     public int shields;
     private int scannersMax;
-    private bool shieldsDisabled;
-    private bool commanderDisabled;
+    public bool shieldsDisabled;
+    public bool commanderDisabled;
+    public bool engineeringDisabled;
+    public bool cosmicExistentialismInPlay;
     private GameObject scanners;
     public Game game;
     public SpriteRenderer diceSpriteR;
     public bool waitingForChoice;
-
-    //TODO move to a function
     public Dice selectedDice;
-
-    //TODO move these to the stations
-    public bool weaponsUsed;
-    public bool engineeringUsed;
 
 
     // Start is called before the first frame update
@@ -29,9 +25,9 @@ public class Ship : MonoBehaviour
         scannersMax = 3;
         shieldsDisabled = false;
         commanderDisabled = false;
+        engineeringDisabled = false;
+        cosmicExistentialismInPlay = false;
         game = gameObject.GetComponentInParent<Game>();
-        weaponsUsed = false;
-        engineeringUsed = false;
         hull = 8;
         shields = 4;
     }
@@ -66,19 +62,8 @@ public class Ship : MonoBehaviour
         }
     }
 
-    public void ToggleShields()
-    {
-        shieldsDisabled = !shieldsDisabled;
-    }
-
-    public void ToggleCommander()
-    {
-        commanderDisabled = !commanderDisabled;
-    }
-
     public void DamageHull(int dmg)
     {
-        Debug.Log("dealing damage");
         if(shields >= dmg)
         {
             shields -= dmg;
@@ -115,7 +100,43 @@ public class Ship : MonoBehaviour
 
     public void NextTurn()
     {
-        weaponsUsed = false;
-        engineeringUsed = false;
+        gameObject.GetComponentInChildren<Weapons>().weaponsUsed = false;
+        gameObject.GetComponentInChildren<Engineering>().engineeringUsed = false;
+    }
+
+    public void SendDiceToInfirmary()
+    {
+        /* checks each area: returned, hand, internal, and external threats for a dice,
+         * grabs the diec and puts it on this card.
+         * if it came from a threat, add it back on to that card's alternate cost.
+         * Also check if the dice is on the Distracted card, in which case it is unavailable.
+         */
+        if (GameObject.Find("Returned Area").GetComponentInChildren<Dice>() != null)
+        {
+            GameObject.Find("Returned Area").GetComponentInChildren<Dice>().MoveArea("Infirmary Area");
+        }
+        else if (GameObject.Find("Hand Area").GetComponentInChildren<Dice>() != null)
+        {
+            GameObject.Find("Hand Area").GetComponentInChildren<Dice>().MoveArea("Infirmary Area");
+        }
+        else if (GameObject.Find("External Threats").GetComponentInChildren<Dice>() != null)
+        {
+            Dice dice = GameObject.Find("External Threats").GetComponentInChildren<Dice>();
+            dice.transform.parent.GetComponent<Card>().alternateCost.Add(dice.face);
+            dice.MoveArea("Infirmary Area");
+        }
+        else if (GameObject.Find("Internal Threats").GetComponentInChildren<Dice>() != null)
+        {
+            Dice dice = GameObject.Find("Internal Threats").GetComponentInChildren<Dice>();
+            if(dice.distracted == false)
+            {
+                dice.transform.parent.GetComponent<Card>().alternateCost.Add(dice.face);
+                dice.MoveArea("Infirmary Area");
+            }
+        }
+        else
+        {
+            game.GameOver();
+        }
     }
 }
